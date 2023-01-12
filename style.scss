@@ -1,0 +1,431 @@
+body {
+    font-family: sans-serif;
+}
+
+$red: #dd0000;
+
+.alert-box {
+    color: $red;
+    border: 1px solid $red;
+}
+
+$red: #bd250a;
+
+//produces
+.alert-box {
+    color: #bd250a;
+    border: 1px solid $red;
+}
+
+ul.nav {
+    list-style: none;
+    li {
+        padding: 0;
+    }
+}
+
+ul {
+    padding: 20px;
+    &.slim {
+        padding: 10px;
+    }
+}
+
+ul {
+    padding: 20px;
+    &.slim {
+        padding: 10px;
+        &.slimmer {
+            padding: 5px;
+        }
+    }
+}
+
+a {
+    text-decoration: none;
+    &:hover, &:focus {
+        text-decoration: underline;
+    }
+}
+
+p{
+    font-size: 1em;
+    .article & {
+        font-size: 1.2em;
+    }
+}
+
+.article h1 {
+    background-color: #FFAFA5;
+    .home & {
+      background-color: #BBFCA2;
+    }
+    .about {
+        background-color: #A0ADF1;
+    }
+}
+
+.footer {
+    font-size: 16px;
+    &.footer-small {
+        font-size: 12px;
+    }
+}
+
+.footer {
+    font-size: 16px;
+    &-small {
+        font-size: 12px;
+    }
+}
+
+// Error
+.article {
+    margin: 20px 0;
+    &__image {
+        width: 40%; 
+    }
+    &--small {
+        width: 20%;
+    }
+}
+
+.body {
+    background: {
+        color: #A1FF7F;
+        image: url(title.png);
+        repeat: none;
+        position: center;
+    } 
+}
+
+.form {
+    border: 1px solid #219fe3;
+    background: #7cc6ef;
+}
+// .quote {
+//     border: 1px solid #219fe3;
+//     background: #7cc6ef;
+//     color: #000;
+// }
+
+.quote {
+    @extend .form;
+    color: #000;
+}
+
+%list-style {
+    list-style: none;
+    padding: 0;
+}
+.list-group {
+    @extend %list-style;
+    margin: 2.5em 0 0.75em;
+}
+
+.heading {
+    font-size: (24 / 2) + px;
+}
+
+// $mixin mixin-name($variable) {
+//     output stuff here;
+// }
+
+$base-font-size: 16;
+@mixin font-size($size) {
+    font-size: $size + px;
+    font-size: ($size / $base-font-size) + rem;
+}
+
+.box {
+    @include font-size(24);
+}
+
+@mixin font-size($size, $line-height) {
+// @mixin font-size($size, $line-height: 35) {
+// @mixin font-size($size, $line-height: (24 / $size)) {
+    font-size: $size + px;
+    font-size: ($size / $base-font-size) + rem;
+    line-height: ($line-height / $size);
+}
+
+.box {
+    @include font-size(24, 32);
+}
+
+@mixin clearfix {
+    &:before,
+    &:after {
+        display: table;
+        content: '';
+        line-height: 0;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+form {
+    @include clearfix;
+}
+
+@function squared($number) {
+    @return ($number * $number);
+}
+
+.text {
+    padding: squared(10) + px;
+}
+
+@function double($number) {
+    @return ($number + $number);
+}
+
+.text {
+    width: double(10px);
+}
+
+@function line-height($font-size, $line-height: 1.5) {
+    @return ($font-size * $line-height);
+}
+
+.text {
+    line-height: line-height(18px);
+}
+
+@mixin font-type($font: 'base') {
+    // @if ($font == bold) {
+    @if ($font == bold) {
+        font-family: 'Avenir-Demi';
+    }
+    @else if ($font == italic) {
+        font-family: 'Avenir-LightItal';
+    }
+    @else {
+        font-family: 'Avenir-Light';
+    }
+}
+
+.heading {
+    @include font-type(bold);
+}
+
+$weather: sunny;
+p {
+    @if ($weather == overcast) {
+        color: grey;
+    }
+    @else if ($weather == sunny) {
+        color: yellow;
+    }
+    @else {
+        color: blue;
+    }
+}
+
+@for $i from 1 through 10 {
+    .col-#{$i} {width: (10% * $i);}
+}
+
+$home: #F7E900;
+$about: #FF5F09;
+$news: #A0005E;
+$links: #41004B;
+
+// list
+$pages: $home, $about, $news, $links;
+
+@for $i from 1 through length($pages) {
+    body.section-#{$i} {
+        background: nth($pages, $i);
+    }
+}
+
+// each loop
+@each $item in $pages {
+    body.section-#{ index($pages, $item)} {
+    background: $item; 
+    }
+}
+
+$pages: (
+    home: #F7E900,
+    about: #FF5F09,
+    news: #A0005E,
+    links: #41004B
+);
+
+@each $key, $value in $pages {
+    body.section-#{$key} {
+        background: $value;
+    }
+}
+
+/*
+@media screen and (min-width: 640px) {
+    @import 'views-tablet';
+}
+*/
+
+// file _forms.scss
+// @import 'forms';
+
+// This is a single line comment
+
+/* 
+    This is a
+    multi-line comment
+*/
+
+.heading {
+    color: red;
+    &-blue {
+        color: blue;
+    }
+}
+
+.nav {
+    background-color: red;
+}
+
+/*
+.aside {
+    width: 100%;
+    @media screen and (min-width: 800px) {
+        float: right;
+        width: 35%;        
+    }
+}
+*/
+$mobile: 640px;
+$tablet: 800px;
+$desktop: 1024px;
+
+/* or
+$break-small: 640px;
+$break-small: 800px;
+$break-large: 1024px;
+*/
+
+.aside {
+    float: none;
+    width: 100%;
+    @media screen and (min-width: $tablet) {
+        float: right;
+        width: 35%;
+    }
+}
+
+@mixin responsify($breakpoint) {
+    @media (min-width: $breakpoint) {
+        @content;
+    }
+}
+
+.article {
+    @include responsify($mobile) {
+        float: left;
+    }
+}
+
+@mixin responsify($min, $media:screen, $max: false) {
+    @if $max {
+        @media #{ $media} and (min-width: $min) and (max-width: $max) {
+            @content;
+        }
+    }
+
+    @else {
+        @media #{$media} and (min-width: $min) {
+            @content;
+        }
+    }
+}
+
+.article {
+    @include responsify($mobile) {
+        float: left;
+    }
+}
+
+.article {
+    @include responsify($mobile, screen, $tablet - 1) {
+        float: left;
+    }
+}
+
+$red: #bd250a;
+.alert {
+    background-color: $red;
+    background-color: rgba($red, 0.75);
+}
+
+@mixin rgbaify($property, $colour, $opacity: 1) {
+    #{$property}: $colour;
+    #{$property}: rgba($colour, $opacity);
+}
+
+.alert {
+    @include rgbaify(background-color, $red, 0.75)
+}
+
+.icon {
+    // round produces 26px (rounds to nearest integer)
+    width: round(25.5px);
+    // ceil produces 3px (rounds up to nearest integer)
+    width: ceil(25px / 10);
+    // floor produces 2px (rounds down to nearest integer)
+    width: floor(25px / 10);
+}
+
+// SASS Maps
+
+$pages: (
+    home: #F7E900,
+    about: #FF5F09,
+    news: #A0005E,
+    links: #41004B
+);
+
+/*
+.news {
+    background-color: map_get($pages, news);
+}
+*/
+
+.news {
+    background-color: map_get($pages, news);
+    border-color: darken(map_get($pages, news), 25%);
+    //font-color: lighten(map_get($pages, news), 25%)
+}
+
+// Doubt here
+$palettes: (
+    blue: (
+        light: #9cb9c8,
+        base: #669db3,
+        dark: #f5814d
+    ),
+    red: (
+        light: #9cb9c8,
+        base: #669db3,
+        dark: #f5814d
+    ),
+    orange: (
+        light: #9cb9c8,
+        base: #669db3,
+        dark: #f5814d
+    )
+);
+
+@function palette($palette, $tone: base) {
+    @return map-get(map-get($palettes, $palette), $tone);
+}
+
+// Doubt code not produce on css
+.box {
+    color: palette(blue);
+    &-border {
+        border: 1px solid palette(blue, dark);
+    }
+}
